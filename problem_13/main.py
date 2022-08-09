@@ -4,7 +4,7 @@ from importlib import import_module
 log = import_module("utils", "..").log
 
 
-@log
+@log()
 def romanToInt(s: str) -> int:
     """
     Given a roman numeral, convert it to an integer.

@@ -5,7 +5,7 @@ from importlib import import_module
 log = import_module("utils", "..").log
 
 
-@log
+@log()
 def twoSum(nums: List[int], target: int) -> List[int]:
     """
     Given an array of integers, return indices of the two numbers such that they add up to a specific target.

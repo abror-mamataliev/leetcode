@@ -5,7 +5,7 @@ from typing import List
 log = import_module("utils", "..").log
 
 
-@log
+@log()
 def longestCommonPrefix(strs: List[str]) -> str:
     """
     Given an array of strings, find the longest common prefix.

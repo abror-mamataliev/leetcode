@@ -4,7 +4,7 @@ from importlib import import_module
 log = import_module("utils", "..").log
 
 
-@log
+@log()
 def isValid(s: str) -> bool:
     """
     Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.

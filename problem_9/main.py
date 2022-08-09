@@ -4,7 +4,7 @@ from importlib import import_module
 log = import_module("utils", "..").log
 
 
-@log
+@log()
 def isPalindrome(x: int) -> bool:
     """
     Given an integer, write a function to determine if it is a palindrome.

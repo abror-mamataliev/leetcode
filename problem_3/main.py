@@ -4,7 +4,7 @@ from importlib import import_module
 log = import_module("utils", "..").log
 
 
-@log
+@log()
 def lengthOfLongestSubstring(s: str) -> int:
     """
     Given a string, find the length of the longest substring without repeating characters.
