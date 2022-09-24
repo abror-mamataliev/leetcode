@@ -36,7 +36,23 @@ def isValid(s: str) -> bool:
     Time Complexity: O(n)
     Space Complexity: O(n)
     """
-    pass
+    stack: list = []
+    brace_resolver: dict = {
+        ')': "(",
+        ']': "[",
+        '}': "{"
+    }
+    opening_braces: list = ["(", "[", "{"]
+    for char in s:
+        if len(stack) == 0:
+            stack.append(char)
+        elif char in opening_braces:
+            stack.append(char)
+        elif stack[-1] == brace_resolver[char]:
+            stack.pop()
+        else:
+            return False
+    return True if len(stack) == 0 else False
 
 
 def run():

@@ -10,4 +10,4 @@
 - [ ] problem 9
 - [ ] problem 13
 - [ ] problem 14
-- [ ] problem 20
+- [x] problem 20
