@@ -1,35 +1,44 @@
-from functools import wraps
+import subprocess
+import sys
+from pathlib import Path
 
-# Decorator function
-# def log(function):
-#     @wraps(function)
-#     def wrapped(**kwargs):
-#         print(f"\n\nFunction: {function.__name__}")
-#         print("\nParams:")
-#         for k, v in kwargs.items():
-#             print(f"{k}: {v}")
-#         result = function(**kwargs)
-#         print(f"\nResult: {result}")
-#         return result
-#     return wrapped
+ROOT = Path(__file__).resolve().parent
+PROBLEMS_DIR = ROOT / "problems"
+TEMPLATES_DIR = ROOT / "templates"
 
 
-# Decorator object
-class log:
-    
-    index = 0
+def find_problem(problem_id: str) -> Path:
+    folder = PROBLEMS_DIR / problem_id
+    if not folder.exists():
+        print(f"Error: {folder} doesn't exist", file=sys.stderr)
+        sys.exit(1)
 
-    @staticmethod
-    def __call__(function):
-        @wraps(function)
-        def wrapped(**kwargs):
-            log.index += 1
-            print(f"\nTest {log.index}")
-            print(f"Function: {function.__name__}")
-            print("Params:")
-            for k, v in kwargs.items():
-                print(f"\t{k}: {v}")
-            result = function(**kwargs)
-            print(f"Result: {result}")
-            return result
-        return wrapped
+    return folder
+
+
+def new_command(args):
+    problem_id = args.id
+    folder = PROBLEMS_DIR / problem_id
+    if folder.exists():
+        print(f"Error: {folder} already exists", file=sys.stderr)
+        sys.exit(1)
+
+    folder.mkdir(parents=True)
+
+    for file in ["solution.py", "test_solution.py"]:
+        template = (TEMPLATES_DIR / f"{file}.tmpl").read_text()
+        (folder / file).write_text(template)
+
+    print(f"Created {folder}")
+
+
+def run_command(args):
+    problem_folder = find_problem(args.id)
+    result = subprocess.run([sys.executable, "-m", "pytest", str(problem_folder), "-v"])
+    sys.exit(result.returncode)
+
+
+def search_command(args):
+    problem_folder = find_problem(args.id)
+    solution = (problem_folder / "solution.py").read_text()
+    print(solution)
